@@ -139,18 +139,29 @@ theme_brand_gt <- function(brand_yml) {
 #' @rdname theme_helpers
 #'
 #' @export
-theme_colors_plotly <- function(bg, fg) {
+theme_colors_plotly <- function(bg, fg, accent = NULL) {
   rlang::check_installed(
     "plotly",
     "plotly is required for theme_colors_plotly"
   )
   (function(plot) {
-    plot |>
-      plotly::layout(
-        paper_bgcolor = bg,
-        plot_bgcolor = bg,
-        font = list(color = fg)
+    # Apply basic background and foreground colors
+    plot <- plot |> plotly::layout(
+      paper_bgcolor = bg,
+      plot_bgcolor = bg,
+      font = list(color = fg)
+    )
+
+    # Add colorway if accent color is provided
+    if (!is.null(accent)) {
+      # Create a colorway array with the accent color
+      # Repeat it to ensure there are enough colors for all traces
+      plot <- plot |> plotly::layout(
+        colorway = rep(accent, 10)
       )
+    }
+
+    plot
   })
 }
 
@@ -165,7 +176,17 @@ theme_brand_plotly <- function(brand_yml) {
   brand <- brand.yml::read_brand_yml(brand_yml)
   bg_color <- brand.yml::brand_color_pluck(brand, "background")
   fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
-  theme_colors_plotly(bg_color, fg_color)
+
+  # Get accent color (same pattern as ggplot2)
+  accent_color <- brand.yml::brand_color_pluck(brand, "accent")
+  if (identical(accent_color, "accent")) {
+    accent_color <- brand.yml::brand_color_pluck(brand, "primary")
+    if (identical(accent_color, "primary")) {
+      accent_color <- NULL
+    }
+  }
+
+  theme_colors_plotly(bg_color, fg_color, accent_color)
 }
 
 
