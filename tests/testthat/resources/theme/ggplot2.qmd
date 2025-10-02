@@ -19,8 +19,8 @@ slate_theme <- theme_brand_ggplot2("slate-brand.yml")
 ```{r}
 #| renderings: [light, dark]
 cars <- ggplot(mtcars, aes(mpg, wt)) +
-  geom_point(aes(colour = factor(cyl))) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4"))
+  geom_point() +
+  geom_smooth(method = "lm")
 
 cars + united_theme
 cars + slate_theme

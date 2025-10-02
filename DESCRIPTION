@@ -39,7 +39,7 @@ Suggests:
     dplyr,
     flextable,
     ggiraph,
-    ggplot2,
+    ggplot2 (>= 4.0.0),
     gt,
     heatmaply,
     kableExtra,

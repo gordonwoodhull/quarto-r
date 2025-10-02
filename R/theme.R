@@ -16,6 +16,7 @@
 #'
 #' @param bg The background color
 #' @param fg The foreground color
+#' @param accent The accent color for plots and visualizations (default: same as foreground color)
 #' @param brand_yml The path to a brand.yml file or directory containing a _brand.yml file
 
 #' @rdname theme_helpers
@@ -54,13 +55,16 @@ theme_brand_flextable <- function(brand_yml) {
 #' @rdname theme_helpers
 #'
 #' @export
-theme_colors_ggplot2 <- function(bg, fg) {
+theme_colors_ggplot2 <- function(bg, fg, accent = NULL) {
   rlang::check_installed(
     "ggplot2",
-    "ggplot2 is required for theme_colors_ggplot2"
+    "ggplot2 v4.0 or later is required for theme_colors_ggplot2",
+    version = "4.0.0"
   )
+
+  # Create and return the theme directly
   ggplot2::`%+%`(
-    ggplot2::theme_minimal(base_size = 11),
+    ggplot2::theme_minimal(base_size = 11, accent = accent),
     ggplot2::theme(
       panel.border = ggplot2::element_blank(),
       panel.grid.major.y = ggplot2::element_blank(),
@@ -88,7 +92,16 @@ theme_brand_ggplot2 <- function(brand_yml) {
   brand <- brand.yml::read_brand_yml(brand_yml)
   bg_color <- brand.yml::brand_color_pluck(brand, "background")
   fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
-  theme_colors_ggplot2(bg_color, fg_color)
+
+  accent_color <- brand.yml::brand_color_pluck(brand, "accent")
+  if (identical(accent_color, "accent")) {
+    accent_color <- brand.yml::brand_color_pluck(brand, "primary")
+    if (identical(accent_color, "primary")) {
+      accent_color <- NULL
+    }
+  }
+
+  theme_colors_ggplot2(bg_color, fg_color, accent_color)
 }
 
 
