@@ -34,42 +34,42 @@ local_render_theme_file <- function(input, .env = parent.frame()) {
 }
 
 test_that("render flextable", {
-  skip_if_not_installed("bslib")
+  skip_if_not_installed("brand.yml")
   skip_if_not_installed("flextable")
   file <- theme_file("flextable.qmd")
   local_render_theme_file(file)
 })
 
 test_that("render ggiraph", {
-  skip_if_not_installed("bslib")
+  skip_if_not_installed("brand.yml")
   skip_if_not_installed("ggiraph")
   file <- theme_file("ggiraph.qmd")
   local_render_theme_file(file)
 })
 
 test_that("render ggplot2", {
-  skip_if_not_installed("bslib")
+  skip_if_not_installed("brand.yml")
   skip_if_not_installed("ggplot2")
   file <- theme_file("ggplot2.qmd")
   local_render_theme_file(file)
 })
 
 test_that("render gt", {
-  skip_if_not_installed("bslib")
+  skip_if_not_installed("brand.yml")
   skip_if_not_installed("gt")
   file <- theme_file("gt.qmd")
   local_render_theme_file(file)
 })
 
 test_that("render plotly-r", {
-  skip_if_not_installed("bslib")
+  skip_if_not_installed("brand.yml")
   skip_if_not_installed("plotly")
   file <- theme_file("plotly-r.qmd")
   local_render_theme_file(file)
 })
 
 test_that("render thematic", {
-  skip_if_not_installed("bslib")
+  skip_if_not_installed("brand.yml")
   skip_if_not_installed("thematic")
   file <- theme_file("thematic.qmd")
   local_render_theme_file(file)

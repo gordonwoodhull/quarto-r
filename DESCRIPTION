@@ -18,6 +18,7 @@ BugReports: https://github.com/quarto-dev/quarto-r/issues
 Depends: 
     R (>= 4.1.0)
 Imports:
+    brand.yml,
     cli,
     fs,
     htmltools,
@@ -32,8 +33,7 @@ Imports:
     utils,
     xfun,
     yaml (>= 2.3.10)
-Suggests: 
-    bslib,
+Suggests:
     callr,
     curl,
     dplyr,

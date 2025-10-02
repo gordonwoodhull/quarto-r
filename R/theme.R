@@ -11,9 +11,12 @@
 #' for examples using each package and `theme_colors_*` to specify the
 #' background and foreground colors directly.
 #'
+#' The `theme_brand_*` functions use the brand.yml package to parse brand.yml files
+#' and extract the appropriate color values for theming.
+#'
 #' @param bg The background color
 #' @param fg The foreground color
-#' @param brand_yml The path to a brand.yml file
+#' @param brand_yml The path to a brand.yml file or directory containing a _brand.yml file
 
 #' @rdname theme_helpers
 #'
@@ -38,12 +41,13 @@ theme_colors_flextable <- function(bg, fg) {
 #' @export
 theme_brand_flextable <- function(brand_yml) {
   rlang::check_installed(
-    "bslib",
-    "bslib is required for brand support in R",
-    version = "0.9.0"
+    "brand.yml",
+    "brand.yml is required for brand support in R"
   )
-  brand <- attr(bslib::bs_theme(brand = brand_yml), "brand")
-  theme_colors_flextable(brand$color$background, brand$color$foreground)
+  brand <- brand.yml::read_brand_yml(brand_yml)
+  bg_color <- brand.yml::brand_color_pluck(brand, "background")
+  fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
+  theme_colors_flextable(bg_color, fg_color)
 }
 
 
@@ -78,12 +82,13 @@ theme_colors_ggplot2 <- function(bg, fg) {
 #' @export
 theme_brand_ggplot2 <- function(brand_yml) {
   rlang::check_installed(
-    "bslib",
-    "bslib is required for brand support in R",
-    version = "0.9.0"
+    "brand.yml",
+    "brand.yml is required for brand support in R"
   )
-  brand <- attr(bslib::bs_theme(brand = brand_yml), "brand")
-  theme_colors_ggplot2(brand$color$background, brand$color$foreground)
+  brand <- brand.yml::read_brand_yml(brand_yml)
+  bg_color <- brand.yml::brand_color_pluck(brand, "background")
+  fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
+  theme_colors_ggplot2(bg_color, fg_color)
 }
 
 
@@ -109,12 +114,13 @@ theme_colors_gt <- function(bg, fg) {
 #' @export
 theme_brand_gt <- function(brand_yml) {
   rlang::check_installed(
-    "bslib",
-    "bslib is required for brand support in R",
-    version = "0.9.0"
+    "brand.yml",
+    "brand.yml is required for brand support in R"
   )
-  brand <- attr(bslib::bs_theme(brand = brand_yml), "brand")
-  theme_colors_gt(brand$color$background, brand$color$foreground)
+  brand <- brand.yml::read_brand_yml(brand_yml)
+  bg_color <- brand.yml::brand_color_pluck(brand, "background")
+  fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
+  theme_colors_gt(bg_color, fg_color)
 }
 
 #' @rdname theme_helpers
@@ -140,12 +146,13 @@ theme_colors_plotly <- function(bg, fg) {
 #' @export
 theme_brand_plotly <- function(brand_yml) {
   rlang::check_installed(
-    "bslib",
-    "bslib is required for brand support in R",
-    version = "0.9.0"
+    "brand.yml",
+    "brand.yml is required for brand support in R"
   )
-  brand <- attr(bslib::bs_theme(brand = brand_yml), "brand")
-  theme_colors_plotly(brand$color$background, brand$color$foreground)
+  brand <- brand.yml::read_brand_yml(brand_yml)
+  bg_color <- brand.yml::brand_color_pluck(brand, "background")
+  fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
+  theme_colors_plotly(bg_color, fg_color)
 }
 
 
@@ -170,10 +177,11 @@ theme_colors_thematic <- function(bg, fg) {
 #' @export
 theme_brand_thematic <- function(brand_yml) {
   rlang::check_installed(
-    "bslib",
-    "bslib is required for brand support in R",
-    version = "0.9.0"
+    "brand.yml",
+    "brand.yml is required for brand support in R"
   )
-  brand <- attr(bslib::bs_theme(brand = brand_yml), "brand")
-  theme_colors_thematic(brand$color$background, brand$color$foreground)
+  brand <- brand.yml::read_brand_yml(brand_yml)
+  bg_color <- brand.yml::brand_color_pluck(brand, "background")
+  fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
+  theme_colors_thematic(bg_color, fg_color)
 }
