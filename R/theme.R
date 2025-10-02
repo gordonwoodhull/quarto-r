@@ -193,15 +193,18 @@ theme_brand_plotly <- function(brand_yml) {
 #' @rdname theme_helpers
 #'
 #' @export
-theme_colors_thematic <- function(bg, fg) {
+theme_colors_thematic <- function(bg, fg, accent = NULL) {
   rlang::check_installed(
     "thematic",
     "thematic is required for theme_colors_thematic"
   )
   (function() {
-    thematic::thematic_rmd(
+    # Use explicit colors instead of 'auto' values
+    # and use thematic_on instead of thematic_rmd
+    thematic::thematic_on(
       bg = bg,
       fg = fg,
+      accent = accent  # Will be NA if NULL, which is fine
     )
   })
 }
@@ -217,5 +220,15 @@ theme_brand_thematic <- function(brand_yml) {
   brand <- brand.yml::read_brand_yml(brand_yml)
   bg_color <- brand.yml::brand_color_pluck(brand, "background")
   fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
-  theme_colors_thematic(bg_color, fg_color)
+
+  # Get accent color (same pattern as ggplot2 and plotly)
+  accent_color <- brand.yml::brand_color_pluck(brand, "accent")
+  if (identical(accent_color, "accent")) {
+    accent_color <- brand.yml::brand_color_pluck(brand, "primary")
+    if (identical(accent_color, "primary")) {
+      accent_color <- NULL
+    }
+  }
+
+  theme_colors_thematic(bg_color, fg_color, accent_color)
 }

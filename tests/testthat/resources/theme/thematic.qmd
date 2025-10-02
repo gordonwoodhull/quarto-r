@@ -82,13 +82,16 @@ library(patchwork)
 
 #generate three scatterplots
 plot1 <- ggplot(mtcars, aes(mpg, wt)) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method = "lm")
 
 plot2 <- ggplot(mtcars, aes(mpg, disp)) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method = "lm")
 
 plot3 <- ggplot(mtcars, aes(mpg, hp)) +
-  geom_point()
+  geom_point() +
+  geom_smooth(method = "lm")
 
 #display all three scatterplots in same graphic
 united_thematic()

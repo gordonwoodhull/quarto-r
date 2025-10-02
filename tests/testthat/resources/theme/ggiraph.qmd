@@ -20,7 +20,7 @@ slate_theme <- theme_brand_ggplot2("slate-brand.yml")
 #| renderings: [light, dark]
 cars <- ggplot(mtcars, aes(mpg, wt)) +
   geom_point_interactive(aes(colour = factor(cyl), tooltip = rownames(mtcars))) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4"))
+  geom_smooth(method = "lm")
 
 girafe(ggobj = cars + united_theme)
 girafe(ggobj = cars + slate_theme)
