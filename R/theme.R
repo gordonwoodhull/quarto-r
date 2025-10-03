@@ -145,17 +145,13 @@ theme_colors_plotly <- function(bg, fg, accent = NULL) {
     "plotly is required for theme_colors_plotly"
   )
   (function(plot) {
-    # Apply basic background and foreground colors
     plot <- plot |> plotly::layout(
       paper_bgcolor = bg,
       plot_bgcolor = bg,
       font = list(color = fg)
     )
 
-    # Add colorway if accent color is provided
     if (!is.null(accent)) {
-      # Create a colorway array with the accent color
-      # Repeat it to ensure there are enough colors for all traces
       plot <- plot |> plotly::layout(
         colorway = rep(accent, 10)
       )
@@ -177,7 +173,6 @@ theme_brand_plotly <- function(brand_yml) {
   bg_color <- brand.yml::brand_color_pluck(brand, "background")
   fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
 
-  # Get accent color (same pattern as ggplot2)
   accent_color <- brand.yml::brand_color_pluck(brand, "accent")
   if (identical(accent_color, "accent")) {
     accent_color <- brand.yml::brand_color_pluck(brand, "primary")
@@ -199,12 +194,10 @@ theme_colors_thematic <- function(bg, fg, accent = NULL) {
     "thematic is required for theme_colors_thematic"
   )
   (function() {
-    # Use explicit colors instead of 'auto' values
-    # and use thematic_on instead of thematic_rmd
     thematic::thematic_on(
       bg = bg,
       fg = fg,
-      accent = accent  # Will be NA if NULL, which is fine
+      accent = accent
     )
   })
 }
@@ -221,7 +214,6 @@ theme_brand_thematic <- function(brand_yml) {
   bg_color <- brand.yml::brand_color_pluck(brand, "background")
   fg_color <- brand.yml::brand_color_pluck(brand, "foreground")
 
-  # Get accent color (same pattern as ggplot2 and plotly)
   accent_color <- brand.yml::brand_color_pluck(brand, "accent")
   if (identical(accent_color, "accent")) {
     accent_color <- brand.yml::brand_color_pluck(brand, "primary")
